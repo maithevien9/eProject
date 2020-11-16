@@ -13,13 +13,16 @@ import User from '../../Images/Icons/profile-user2.png';
 import User2 from '../../Images/Icons/profile-user.png';
 import Contact from './Contact/Contact';
 import Home from './Home/Home';
+import Notify from './Notify/Notify';
+import About from './About/about';
+import ContactMain from './Contact/ContactMain';
 const Main = () => {
   const [selectedTab, setSelectedTab] = React.useState('home');
   return (
     <TabNavigator tabBarStyle={{height: 53}}>
       <TabNavigator.Item
         selected={selectedTab === 'home'}
-        title="Home"
+        title="Trang Chủ"
         renderIcon={() => <Image source={icHome} style={styles.wrapperImage} />}
         renderSelectedIcon={() => (
           <Image source={icHome2} style={styles.wrapperImage} />
@@ -29,7 +32,7 @@ const Main = () => {
       </TabNavigator.Item>
       <TabNavigator.Item
         selected={selectedTab === 'notify'}
-        title="Notify"
+        title="Thông Báo"
         renderIcon={() => (
           <Image source={icNotify} style={styles.wrapperImage} />
         )}
@@ -37,33 +40,29 @@ const Main = () => {
           <Image source={icNotify2} style={styles.wrapperImage} />
         )}
         onPress={() => setSelectedTab('notify')}>
-        <View>
-          <Text>2</Text>
-        </View>
+        <Notify />
       </TabNavigator.Item>
       <TabNavigator.Item
-        selected={selectedTab === 'introduce'}
-        title="Introduce"
+        selected={selectedTab === 'About'}
+        title="Giới Thiệu"
         renderIcon={() => (
           <Image source={icNote2} style={styles.wrapperImage} />
         )}
         renderSelectedIcon={() => (
           <Image source={icNote} style={styles.wrapperImage} />
         )}
-        onPress={() => setSelectedTab('introduce')}>
-        <View>
-          <Text>3</Text>
-        </View>
+        onPress={() => setSelectedTab('About')}>
+        <About />
       </TabNavigator.Item>
       <TabNavigator.Item
         selected={selectedTab === 'Contact'}
-        title="Contact"
+        title="Thông Tin"
         renderIcon={() => <Image source={User2} style={styles.wrapperImage} />}
         renderSelectedIcon={() => (
           <Image source={User} style={styles.wrapperImage} />
         )}
         onPress={() => setSelectedTab('Contact')}>
-        <Contact />
+        <ContactMain />
       </TabNavigator.Item>
     </TabNavigator>
   );

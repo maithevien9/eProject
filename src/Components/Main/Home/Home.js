@@ -69,11 +69,27 @@ const Home = (props) => {
             <View>
               {/* <Image source={profileImage} style={styles.ImageStyle}></Image> */}
             </View>
-            <Text style={styles.textUSer}>Hello</Text>
+            {/* <Text style={styles.textUSer}>Hello</Text> */}
+            <View style={{height: 50}}></View>
+
+            <TouchableOpacity style={styles.WrapperBtnLogOut}>
+              <Text style={styles.StyleTextBtn}>Đổi Quà</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.WrapperBtnLogOut}>
+              <Text style={styles.StyleTextBtn}>Lịch Sử Đổi Quà</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.WrapperBtnLogOut}>
+              <Text style={styles.StyleTextBtn}>Lịch Sử Tích Điểm</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.WrapperBtnLogOut}>
+              <Text style={styles.StyleTextBtn}>Lịch Sử Rác Tái Chế</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity
-              style={styles.WrapperBtnLogOut}
+              style={styles.WrapperBtnLogOut2}
               onPress={HandlerLogOut}>
-              <Text>Logout</Text>
+              <Text style={styles.StyleTextBtn}>Đăng Xuất</Text>
             </TouchableOpacity>
           </View>
         }>
@@ -119,6 +135,7 @@ const styles = StyleSheet.create({
     color: '#088A68',
   },
   textUSer: {
+    marginTop: 20,
     fontSize: 15,
     fontFamily: 'monospace',
     color: 'black',
@@ -127,10 +144,25 @@ const styles = StyleSheet.create({
   },
   WrapperBtnLogOut: {
     height: 60,
-    width: 280,
+    width: '90%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 15,
+    marginTop: 15,
+  },
+  WrapperBtnLogOut2: {
+    height: 60,
+    width: '90%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    borderRadius: 15,
+    marginTop: 315,
+  },
+  StyleTextBtn: {
+    fontSize: 16,
+    fontFamily: 'monospace',
+    color: 'black',
   },
 });

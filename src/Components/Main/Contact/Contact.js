@@ -16,6 +16,7 @@ import messageIcon from '../../../Images/Icons/message.png';
 import locationIcon from '../../../Images/Icons/location.png';
 import MapView, {Polyline} from 'react-native-maps';
 import {Marker} from 'react-native-maps';
+import {useNavigation} from '@react-navigation/native';
 // import Geolocation from '@react-native-community/geolocation';
 // import {Platform, PermissionsAndroid} from 'react-native';
 // import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
@@ -28,6 +29,7 @@ const {width} = Dimensions.get('window');
 // ]);
 
 const Contact = () => {
+  const navigation = useNavigation();
   const {
     mapContainer,
     wrapper,
@@ -79,9 +81,15 @@ const Contact = () => {
     description: 'Work',
     geometry: {location: {lat: 48.8496818, lng: 2.2940881}},
   };
-
+  const handleUpdateUser = () => {
+    console.log('Vien');
+    navigation.navigate('ContactUpdate');
+  };
   return (
-    <View style={wrapper}>
+    <View>
+      <View style={styles.wrapperHeader}>
+        <Text style={styles.textStyleHeader}>THÔNG TIN NGƯỜI DÙNG</Text>
+      </View>
       <View style={mapContainer}>
         {/* <GooglePlacesAutocomplete
           placeholder="Enter Location"
@@ -117,13 +125,9 @@ const Contact = () => {
           predefinedPlaces={[homePlace, workPlace]}
         /> */}
 
-        <MapView
+        {/* <MapView
           style={styles.map}
           initialRegion={{
-            // latitude: 37.78825,
-            // longitude: -122.4324,
-            // latitudeDelta: 0.0922,
-            // longitudeDelta: 0.0421,
             latitude: latitude,
             longitude: longitude,
             latitudeDelta: 0.01,
@@ -137,7 +141,7 @@ const Contact = () => {
             title={'Vien'}
             description={'64 Nhon Hoa 5 - Cam Le - Da Nang'}
           />
-        </MapView>
+        </MapView> */}
       </View>
       <View style={infoContainer}>
         <View style={rowInfoContainer}>
@@ -157,12 +161,40 @@ const Contact = () => {
           <Text style={infoText}>Mai The Vien</Text>
         </View>
       </View>
+      <View style={{alignItems: 'center', marginTop: 10}}>
+        <TouchableOpacity
+          style={styles.wapperBtnUpdate}
+          onPress={() => {
+            handleUpdateUser();
+          }}>
+          <Text>Cập nhập</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   wrapper: {flex: 1, backgroundColor: '#F6F6F6'},
+  wrapperMain: {
+    backgroundColor: '#FFFFFF',
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+  },
+  wrapperMain2: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: '#C0C0C0',
+    alignItems: 'center',
+  },
+  wrapperHeader: {
+    height: 80,
+    width: '100%',
+    backgroundColor: '#009966',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   wrapperBtnlc: {
     height: 28,
     width: '70%',
@@ -192,12 +224,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
   },
   infoContainer: {
+    alignItems: 'center',
     padding: 10,
-
     backgroundColor: '#FFF',
     margin: 10,
     marginTop: 0,
-    borderRadius: 2,
+    borderRadius: 20,
     shadowColor: '#3B5458',
     shadowOffset: {width: 0, height: 3},
     shadowOpacity: 0.2,
@@ -207,8 +239,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#D6D6D6',
+    borderBottomWidth: 6,
+    borderColor: '#F6F6F6',
+    width: '95%',
   },
   imageStyle: {
     width: 15,
@@ -218,13 +251,26 @@ const styles = StyleSheet.create({
     fontFamily: 'monospace',
     color: '#AE005E',
     fontWeight: '500',
-    fontSize: 10,
+    fontSize: 13,
   },
   infoText2: {
     fontFamily: 'monospace',
     color: 'white',
     fontWeight: '500',
     fontSize: 14,
+  },
+  textStyleHeader: {
+    fontSize: 28,
+    fontFamily: 'monospace',
+    color: 'white',
+  },
+  wapperBtnUpdate: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#009966',
+    borderRadius: 10,
+    height: 50,
+    width: '92%',
   },
 });
 

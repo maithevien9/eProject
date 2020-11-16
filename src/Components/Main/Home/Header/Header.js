@@ -17,15 +17,17 @@ class Header extends Component {
     return (
       <View
         style={{
-          height: height / 12,
+          height: 80,
           backgroundColor: '#009966',
           padding: 13,
         }}>
         <View style={styles.wrapper1}>
-          <TouchableOpacity onPress={this.props.onOpen}>
+          <TouchableOpacity
+            onPress={this.props.onOpen}
+            style={{justifyContent: 'center', alignItems: 'center'}}>
             <Image source={icMenu} style={styles.iconStyle}></Image>
           </TouchableOpacity>
-          <Text style={styles.textStyle}>eTech Dream</Text>
+          <Text style={styles.textStyle}>ETECH DREAM</Text>
           <View style={styles.wrapperWrong} />
         </View>
         {/* <View style={styles.wrapper2}>
@@ -68,6 +70,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+
+    alignItems: 'center',
   },
   wrapper2: {
     flex: 1,
@@ -75,12 +79,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textStyle: {
-    fontSize: 25,
+    fontSize: 30,
     fontFamily: 'monospace',
     color: 'white',
   },
   wrapperWrong: {
     width: 25,
     height: 25,
+  },
+  textStyleHeader: {
+    fontSize: 28,
+    fontFamily: 'monospace',
+    color: 'white',
   },
 });
