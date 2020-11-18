@@ -12,7 +12,7 @@ import QA2 from '../../Images/Icons/qa2.png';
 import User from '../../Images/Icons/profile-user2.png';
 import User2 from '../../Images/Icons/profile-user.png';
 import Contact from './Contact/Contact';
-import Home from './Home/Home';
+import Home from './Home/HomeMain';
 import Notify from './Notify/Notify';
 import About from './About/about';
 import ContactMain from './Contact/ContactMain';

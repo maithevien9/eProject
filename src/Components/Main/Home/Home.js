@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     borderRadius: 15,
-    marginTop: 315,
+    marginTop: '50%',
   },
   StyleTextBtn: {
     fontSize: 16,
