@@ -1,17 +1,23 @@
 import {createStore, combineReducers} from 'redux';
 
 var dataLogin = {};
-
-// var arrUser = [];
-
-// var dataInforUser = {};
-
-// const dataInforUserReducer = (state = dataInforUser, action) => {
-//   if (action.type === 'dataInforUser') return action.data;
-//   return state;
-// };
+var Scores = 0;
+var dataNotify = [];
 const dataLoginReducer = (state = dataLogin, action) => {
   if (action.type === 'setDataLogin') return action.data;
+  return state;
+};
+const dataNotifyReducer = (state = dataNotify, action) => {
+  if (action.type === 'setdataNotify') return action.data;
+  return state;
+};
+const ScoresReducer = (state = Scores, action) => {
+  if (action.type === 'setScore') {
+    return action.data;
+  }
+  if (action.type === 'MinusPoints') {
+    return state - action.data;
+  }
   return state;
 };
 
@@ -20,9 +26,9 @@ const dataLoginReducer = (state = dataLogin, action) => {
 //   return state;
 // };
 const reducer = combineReducers({
-  //   arrUser: arrUserReducer,
   dataLogin: dataLoginReducer,
-  //   dataInforUser: dataInforUserReducer,
+  Scores: ScoresReducer,
+  dataNotify: dataNotifyReducer,
 });
 const store = createStore(reducer);
 

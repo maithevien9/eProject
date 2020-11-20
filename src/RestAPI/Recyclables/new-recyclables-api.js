@@ -1,5 +1,5 @@
-const LoginAPI = async (user, password) => {
-  var url = 'http://192.168.1.3:8001/Login';
+const NewRecyclablesAPI = async (Token, level) => {
+  var url = 'http://192.168.1.3:8001/NewRecyclables';
 
   return await fetch(url, {
     method: 'POST',
@@ -8,10 +8,10 @@ const LoginAPI = async (user, password) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      User: user,
-      PassWord: password,
+      token: Token,
+      IDlevel: level,
     }),
   }).then((response) => response.json());
 };
 
-export default LoginAPI;
+export default NewRecyclablesAPI;

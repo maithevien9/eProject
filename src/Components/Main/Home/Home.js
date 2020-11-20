@@ -54,7 +54,7 @@ const Home = (props) => {
       data: data,
     });
     SaveDataLogin(data);
-    navigation.navigate('Authenication');
+    navigation.replace('Authenication');
   };
   // const main = dataCheckLoginSuccess ? <Login /> : <Logout />;
 

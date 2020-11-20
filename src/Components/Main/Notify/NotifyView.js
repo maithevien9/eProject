@@ -1,7 +1,36 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import icEmail from '../../../Images/Icons/email.png';
-const NotifyView = () => {
+
+import Notify from '../../../RestAPI/Notify/get-notify-api';
+import {connect} from 'react-redux';
+const NotifyView = (props) => {
+  useEffect(() => {
+    async function CheckRecyle() {
+      Notify(props.dataLogin.token)
+        .then((json) => {
+          var data = JSON.parse(JSON.stringify(json));
+          console.log(data);
+          props.dispatch({
+            type: 'setdataNotify',
+            data: data.data,
+          });
+        })
+        .catch((error) => {
+          console.error(error + 'fail');
+        });
+    }
+    CheckRecyle();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const convertDate = (date) => {
+    var ts = new Date(date);
+    return ts.toLocaleDateString();
+  };
+  const convertDate2 = (date) => {
+    var ts = new Date(date);
+    return ts.toLocaleTimeString();
+  };
   return (
     <View>
       <View style={styles.wrapperHeader}>
@@ -9,19 +38,25 @@ const NotifyView = () => {
       </View>
       {/* <View style={styles.wrapperMain2}> */}
       {/* <View style={{height: 4, backgroundColor: '#FFFFFF'}}></View> */}
+
       <View style={styles.wrapperMain}>
-        <View style={styles.wrapperNotify}>
-          <View style={styles.wrapperInNotyfi}>
-            <View style={styles.wrapperImageInNotify}>
-              <Image source={icEmail} style={styles.wrapperImage} />
-            </View>
-            <View style={{width: 350, marginLeft: 20}}>
-              <Text style={styles.wrapperTextInNotify}>Nice to miss you</Text>
-              <Text style={styles.StyleTextTime}>10:00 11/2/2020</Text>
+        {props.dataNotify.map((e) => (
+          <View style={styles.wrapperNotify} key={e.ID}>
+            <View style={styles.wrapperInNotyfi}>
+              <View style={styles.wrapperImageInNotify}>
+                <Image source={icEmail} style={styles.wrapperImage} />
+              </View>
+              <View style={{width: 350, marginLeft: 20}}>
+                <Text style={styles.wrapperTextInNotify}>{e.Name}</Text>
+                <Text style={styles.StyleTextTime}>
+                  {convertDate(e.CreateAtTime)} {convertDate2(e.CreateAtTime)}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-        <View style={styles.wrapperNotify}>
+        ))}
+
+        {/* <View style={styles.wrapperNotify}>
           <View style={styles.wrapperInNotyfi}>
             <View style={styles.wrapperImageInNotify}>
               <Image source={icEmail} style={styles.wrapperImage} />
@@ -46,14 +81,21 @@ const NotifyView = () => {
               <Text style={styles.StyleTextTime}>10:00 11/2/2020</Text>
             </View>
           </View>
-        </View>
+        </View> */}
       </View>
       {/* </View> */}
     </View>
   );
 };
 
-export default NotifyView;
+function mapStateToProps(state) {
+  return {
+    dataLogin: state.dataLogin,
+    Scores: state.Scores,
+    dataNotify: state.dataNotify,
+  };
+}
+export default connect(mapStateToProps)(NotifyView);
 
 const styles = StyleSheet.create({
   wrapperMain: {

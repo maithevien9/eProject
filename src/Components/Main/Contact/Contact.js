@@ -14,8 +14,10 @@ import phoneIcon from '../../../Images/Icons/phone.png';
 import mailIcon from '../../../Images/Icons/mail.png';
 import messageIcon from '../../../Images/Icons/message.png';
 import locationIcon from '../../../Images/Icons/location.png';
-import MapView, {Polyline} from 'react-native-maps';
-import {Marker} from 'react-native-maps';
+
+// import MapView, {Polyline} from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
+
 import {useNavigation} from '@react-navigation/native';
 // import Geolocation from '@react-native-community/geolocation';
 // import {Platform, PermissionsAndroid} from 'react-native';
@@ -125,7 +127,7 @@ const Contact = () => {
           predefinedPlaces={[homePlace, workPlace]}
         /> */}
 
-        {/* <MapView
+        <MapView
           style={styles.map}
           initialRegion={{
             latitude: latitude,
@@ -141,7 +143,7 @@ const Contact = () => {
             title={'Vien'}
             description={'64 Nhon Hoa 5 - Cam Le - Da Nang'}
           />
-        </MapView> */}
+        </MapView>
       </View>
       <View style={infoContainer}>
         <View style={rowInfoContainer}>

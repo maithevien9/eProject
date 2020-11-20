@@ -1,5 +1,5 @@
-const LoginAPI = async (user, password) => {
-  var url = 'http://192.168.1.3:8001/Login';
+const CreateHistoryScore = async (token, IDGift, PriceGift) => {
+  var url = 'http://192.168.1.3:8001/CreateHistory';
 
   return await fetch(url, {
     method: 'POST',
@@ -8,10 +8,11 @@ const LoginAPI = async (user, password) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      User: user,
-      PassWord: password,
+      token: token,
+      IDGift: IDGift,
+      PriceGift: PriceGift,
     }),
   }).then((response) => response.json());
 };
 
-export default LoginAPI;
+export default CreateHistoryScore;

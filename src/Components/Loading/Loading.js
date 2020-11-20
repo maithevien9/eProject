@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import CheckToken from '../../RestAPI/User/check-token';
 import AsyncStorage from '@react-native-community/async-storage';
 import {connect} from 'react-redux';
+
 const Loading = (props) => {
   const [selectedTab, setSelectedTab] = React.useState('Home');
   const navigation = useNavigation();
@@ -30,20 +31,19 @@ const Loading = (props) => {
                 //console.log(DataLoginUser);
 
                 if (data.dataString === 'THANH_CONG') {
-                  console.log('OK');
-                  navigation.navigate('Main');
+                  navigation.replace('Main');
                 } else {
-                  navigation.navigate('Authenication');
+                  navigation.replace('Authenication');
                 }
               })
               .catch((error) => {
                 console.error(error + 'fail');
               });
           } else {
-            navigation.navigate('Authenication');
+            navigation.replace('Authenication');
           }
         } else {
-          navigation.navigate('Authenication');
+          navigation.replace('Authenication');
         }
       }
       getDataLogin();
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 25,
     fontFamily: 'monospace',
+    fontWeight: 'bold',
   },
 });
 

@@ -8,7 +8,10 @@ import Loading from './src/Components/Loading/Loading';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Authenication from './src/Components/Authenication/Authenication';
-
+import Category from './src/Components/Main/Home/category/category';
+import Collect from './src/Components/Main/Home/Collect/Collect';
+import Gift from './src/Components/Main/Home/Gift/Gift';
+import Points from './src/Components/Main/Home/Points/Points';
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -18,6 +21,10 @@ const App = () => {
           <Stack.Screen name="Loading" component={Loading} />
           <Stack.Screen name="Authenication" component={Authenication} />
           <Stack.Screen name="Main" component={Main} />
+          <Stack.Screen name="Category" component={Category} />
+          <Stack.Screen name="Collect" component={Collect} />
+          <Stack.Screen name="Gift" component={Gift} />
+          <Stack.Screen name="Points" component={Points} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

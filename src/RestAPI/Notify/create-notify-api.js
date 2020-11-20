@@ -1,5 +1,5 @@
-const LoginAPI = async (user, password) => {
-  var url = 'http://192.168.1.3:8001/Login';
+const CreateNotifyAPI = async (Name, Detail, token) => {
+  var url = 'http://192.168.1.3:8001/CreateNotify';
 
   return await fetch(url, {
     method: 'POST',
@@ -8,10 +8,11 @@ const LoginAPI = async (user, password) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      User: user,
-      PassWord: password,
+      Name: Name,
+      Detail: Detail,
+      token: token,
     }),
   }).then((response) => response.json());
 };
 
-export default LoginAPI;
+export default CreateNotifyAPI;

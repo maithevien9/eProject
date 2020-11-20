@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     flex: 1,
     backgroundColor: '#009966',
+    alignItems: 'center',
   },
   wrapperInput: {
     height: 300,
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     paddingTop: 300,
     paddingLeft: 20,
     paddingRight: 20,
-    justifyContent: 'space-between',
+
     flexDirection: 'row',
   },
   SectionButton: {
@@ -143,7 +144,6 @@ const styles = StyleSheet.create({
     borderColor: '#808080',
     borderWidth: 1,
     borderTopLeftRadius: 40,
-
     alignItems: 'center',
     justifyContent: 'center',
   },
