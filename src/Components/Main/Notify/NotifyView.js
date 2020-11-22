@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 import icEmail from '../../../Images/Icons/email.png';
 
 import Notify from '../../../RestAPI/Notify/get-notify-api';
 import {connect} from 'react-redux';
+
 const NotifyView = (props) => {
   useEffect(() => {
     async function CheckRecyle() {
@@ -32,7 +33,7 @@ const NotifyView = (props) => {
     return ts.toLocaleTimeString();
   };
   return (
-    <View>
+    <ScrollView>
       <View style={styles.wrapperHeader}>
         <Text style={styles.textStyleHeader}>THÔNG BÁO</Text>
       </View>
@@ -47,7 +48,9 @@ const NotifyView = (props) => {
                 <Image source={icEmail} style={styles.wrapperImage} />
               </View>
               <View style={{width: 350, marginLeft: 20}}>
-                <Text style={styles.wrapperTextInNotify}>{e.Name}</Text>
+                <View style={{width: '85%'}}>
+                  <Text style={styles.wrapperTextInNotify}>{e.Name}</Text>
+                </View>
                 <Text style={styles.StyleTextTime}>
                   {convertDate(e.CreateAtTime)} {convertDate2(e.CreateAtTime)}
                 </Text>
@@ -84,7 +87,7 @@ const NotifyView = (props) => {
         </View> */}
       </View>
       {/* </View> */}
-    </View>
+    </ScrollView>
   );
 };
 

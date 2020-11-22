@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   wrapperCategory: {
     height: 150,
-    width: 180,
+    width: 160,
     backgroundColor: 'white',
     elevation: 10,
     alignItems: 'center',
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   wrapperCategory2: {
     height: 150,
-    width: 180,
+    width: 160,
     backgroundColor: 'white',
     elevation: 10,
     alignItems: 'center',
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   wrapperCategory3: {
     height: 150,
-    width: 180,
+    width: 160,
     backgroundColor: 'white',
     elevation: 10,
     alignItems: 'center',
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   wrapperCategory4: {
     height: 150,
-    width: 180,
+    width: 160,
     backgroundColor: 'white',
     elevation: 10,
     alignItems: 'center',
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   styleTextInMain: {
     fontWeight: 'bold',
-    fontSize: 14.5,
+    fontSize: 13,
     fontFamily: 'monospace',
     marginTop: '10%',
 
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   styleTextInMain2: {
     fontWeight: 'bold',
-    fontSize: 14.5,
+    fontSize: 13,
     fontFamily: 'monospace',
     marginTop: '10%',
 
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   },
   styleTextInMain3: {
     fontWeight: 'bold',
-    fontSize: 14.5,
+    fontSize: 13,
     fontFamily: 'monospace',
     marginTop: '10%',
 
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   styleTextInMain4: {
     fontWeight: 'bold',
-    fontSize: 14.5,
+    fontSize: 13,
     fontFamily: 'monospace',
     marginTop: '10%',
 

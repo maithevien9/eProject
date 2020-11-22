@@ -12,6 +12,7 @@ import Category from './src/Components/Main/Home/category/category';
 import Collect from './src/Components/Main/Home/Collect/Collect';
 import Gift from './src/Components/Main/Home/Gift/Gift';
 import Points from './src/Components/Main/Home/Points/Points';
+import HistoryGift from './src/Components/Main/Home/Menu/HistoryGift';
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Stack.Screen name="Collect" component={Collect} />
           <Stack.Screen name="Gift" component={Gift} />
           <Stack.Screen name="Points" component={Points} />
+          <Stack.Screen name="HistoryGift" component={HistoryGift} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

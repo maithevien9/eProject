@@ -15,7 +15,7 @@ import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import HomeView from './HomeView';
 import SaveDataLogin from '../../../AsyncStorage/SaveDataLogin';
-
+import GetHistoryGift from '../../../RestAPI/Gift/get-history-gift-api';
 const Home = (props) => {
   const [value, setvalue] = React.useState();
   const navigation = useNavigation();
@@ -57,7 +57,21 @@ const Home = (props) => {
     navigation.replace('Authenication');
   };
   // const main = dataCheckLoginSuccess ? <Login /> : <Logout />;
-
+  const HandleHistoryGift = () => {
+    GetHistoryGift(props.dataLogin.token)
+      .then((json) => {
+        var data = JSON.parse(JSON.stringify(json));
+        console.log(data);
+        props.dispatch({
+          type: 'historyGift',
+          data: data.data,
+        });
+      })
+      .catch((error) => {
+        console.error(error + 'fail');
+      });
+    navigation.navigate('HistoryGift');
+  };
   return (
     <View style={{flex: 1}}>
       <Drawer
@@ -70,12 +84,11 @@ const Home = (props) => {
               {/* <Image source={profileImage} style={styles.ImageStyle}></Image> */}
             </View>
             {/* <Text style={styles.textUSer}>Hello</Text> */}
-            <View style={{height: 50}}></View>
+            <View style={{height: 50}} />
 
-            <TouchableOpacity style={styles.WrapperBtnLogOut}>
-              <Text style={styles.StyleTextBtn}>Đổi Quà</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.WrapperBtnLogOut}>
+            <TouchableOpacity
+              style={styles.WrapperBtnLogOut}
+              onPress={HandleHistoryGift}>
               <Text style={styles.StyleTextBtn}>Lịch Sử Đổi Quà</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.WrapperBtnLogOut}>
@@ -93,7 +106,7 @@ const Home = (props) => {
             </TouchableOpacity>
           </View>
         }>
-        <HomeView open={openControlPanel.bind(this)}></HomeView>
+        <HomeView open={openControlPanel.bind(this)} />
       </Drawer>
     </View>
   );
@@ -102,6 +115,7 @@ function mapStateToProps(state) {
   return {
     dataCheckLoginSuccess: state.dataCheckLoginSuccess,
     dataLogin: state.dataLogin,
+    historyGift: state.historyGift,
   };
 }
 export default connect(mapStateToProps)(Home);
