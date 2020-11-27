@@ -1,16 +1,94 @@
 import React, {Component, useState} from 'react';
-import {View, Text, StyleSheet, TextInput, Image} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from 'react-native';
+
 import icBack from '../../../Images/Icons/back.png';
 import {useNavigation} from '@react-navigation/native';
-const ContactUpdate = () => {
-  const [Name, setName] = useState('');
-  const [Address, setAddress] = useState('');
-  const [Phone, setPhone] = useState('');
-  const [Birthday, setBirthday] = useState('');
+import MapView, {Marker} from 'react-native-maps';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import {connect} from 'react-redux';
+import ChangInforUser from '../../../RestAPI/User/change-infor-user-api';
+const ContactUpdate = (props) => {
+  const [Name, setName] = useState(props.InforUser[0].Name);
+  const [Address, setAddress] = useState('/');
+
+  const [Phone, setPhone] = useState(
+    props.InforUser[0].Phone ? JSON.stringify(props.InforUser[0].Phone) : '',
+  );
+
   const navigation = useNavigation();
+  const [latitude, setlatitude] = useState(21.0277644);
+  const [longitude, setlongitude] = useState(105.8341598);
+  const [ZoomX, setZoomX] = useState(15.01);
+  const [ZoomY, setZoomY] = useState(15.01);
+  const [height, setheight] = useState(55);
   const handleBack = () => {
     navigation.goBack();
+  };
+  const HandleClick = () => {
+    setheight(300);
+  };
+  const handleUpdate = () => {
+    console.log(Address);
+    console.log(Name);
+    console.log(Phone);
+    console.log(latitude);
+    console.log(longitude);
+    ChangInforUser(
+      props.dataLogin.token,
+      Name,
+      Address,
+      Phone,
+      latitude,
+      longitude,
+    )
+      .then((json) => {
+        var data = JSON.parse(JSON.stringify(json));
+        console.log(data);
+        if (data.dataString === 'THANH_CONG') {
+          props.dispatch({
+            type: 'setInforUser',
+            data: [
+              {
+                ID: 8,
+                Name: Name,
+                Address: Address,
+                X: latitude,
+                Y: longitude,
+                Phone: Phone,
+                IDdecentralization: 1,
+              },
+            ],
+          });
+          props.dispatch({
+            type: 'setdataCheckLocal',
+            data: true,
+          });
+          Alert.alert(
+            'Nofity',
+            'Thanh Cong',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => navigation.goBack(),
+                style: 'cancel',
+              },
+              {text: 'OK', onPress: () => navigation.goBack()},
+            ],
+            {cancelable: false},
+          );
+        }
+      })
+      .catch((error) => {
+        console.error(error + 'fail');
+      });
   };
   return (
     <View>
@@ -18,13 +96,74 @@ const ContactUpdate = () => {
         <Text style={styles.textStyleHeader}>CẬP NHẬP THÔNG TIN</Text>
       </View>
       <View style={styles.wrapperLine} />
-      <TouchableOpacity
-        style={{paddingLeft: 20, marginVertical: 10}}
-        onPress={handleBack}>
-        <Image source={icBack} style={styles.wrapperImage} />
-      </TouchableOpacity>
+
       <View style={styles.wrapperMapFull}>
-        <View style={styles.wrapperMap} />
+        {/* <View style={styles.wrapperMap} /> */}
+
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: latitude,
+            longitude: longitude,
+            latitudeDelta: ZoomX,
+            longitudeDelta: ZoomY,
+          }}>
+          <Marker
+            coordinate={{
+              latitude: latitude,
+              longitude: longitude,
+            }}
+            // title={'Vien'}
+            // description={Address}
+          />
+        </MapView>
+      </View>
+      <View
+        style={{
+          height: '25%',
+          width: '100%',
+          paddingHorizontal: 10,
+          flexWrap: 'wrap',
+        }}>
+        <GooglePlacesAutocomplete
+          placeholder="Nhập địa chỉ"
+          minLength={2}
+          autoFocus={false}
+          returnKeyType={'default'}
+          fetchDetails={true}
+          styles={{
+            textInputContainer: {
+              backgroundColor: 'grey',
+              marginTop: 6,
+              height: 40,
+              width: '100%',
+            },
+            textInput: {
+              borderRadius: 0,
+              height: 38,
+              color: 'black',
+              fontSize: 16,
+            },
+            predefinedPlacesDescription: {
+              color: '#1faadb',
+            },
+          }}
+          onPress={(data, details = null) => {
+            // 'details' is provided when fetchDetails = true
+            console.log(data.description);
+            setAddress(data.description);
+
+            setlatitude(details.geometry.location.lat);
+            setlongitude(details.geometry.location.lng);
+            setZoomX(0.3);
+            setZoomY(0.3);
+          }}
+          query={{
+            key: 'AIzaSyAE8jGKDc99bqKIup4jFl_17OtQKoTkG_k',
+            language: 'vn',
+          }}
+          // predefinedPlaces={[homePlace, workPlace]}
+        />
       </View>
       <View style={styles.wrapperInput}>
         <TextInput
@@ -39,15 +178,13 @@ const ContactUpdate = () => {
           style={styles.textInput}
           placeholder="Số điện thoại"
         />
-        <TextInput
-          onChangeText={(text) => setBirthday(text)}
-          value={Birthday}
-          style={styles.textInput}
-          placeholder="Ngày tháng năm sinh"
-        />
 
-        <View style={{alignItems: 'center', marginTop: 10}}>
-          <TouchableOpacity style={styles.wapperBtnUpdate}>
+        <View style={{alignItems: 'center', marginTop: 10, width: '90%'}}>
+          <TouchableOpacity
+            style={styles.wapperBtnUpdate}
+            onPress={() => {
+              handleUpdate();
+            }}>
             <Text>Cập nhập</Text>
           </TouchableOpacity>
         </View>
@@ -87,12 +224,12 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 50,
-    width: 406,
+    width: '90%',
     backgroundColor: 'white',
     borderColor: 'black',
-    borderWidth: 1.2,
+    borderWidth: 0.5,
     paddingLeft: 20,
-    marginBottom: 15,
+    marginBottom: 8,
     fontSize: 13,
     borderRadius: 15,
   },
@@ -114,9 +251,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#009966',
     borderRadius: 15,
-    height: 50,
-    width: 406,
-    borderWidth: 1.2,
+    height: 40,
+    width: 300,
+    borderWidth: 0.5,
+  },
+  map: {width: '95%', height: 255},
+  wrapperPlaces: {
+    height: 55,
+    width: '100%',
+    paddingHorizontal: 10,
   },
 });
-export default ContactUpdate;
+
+function mapStateToProps(state) {
+  return {
+    dataLogin: state.dataLogin,
+    InforUser: state.InforUser,
+    dataCheckLocal: state.dataCheckLocal,
+    ZoomY: state.ZoomY,
+    ZoomX: state.ZoomX,
+  };
+}
+export default connect(mapStateToProps)(ContactUpdate);

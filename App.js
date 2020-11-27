@@ -13,6 +13,10 @@ import Collect from './src/Components/Main/Home/Collect/Collect';
 import Gift from './src/Components/Main/Home/Gift/Gift';
 import Points from './src/Components/Main/Home/Points/Points';
 import HistoryGift from './src/Components/Main/Home/Menu/HistoryGift';
+import HistoryScore from './src/Components/Main/Home/Menu/HistoryScore';
+import HistoryRecyclables from './src/Components/Main/Home/Menu/HistoryRecyclable';
+import ContactUpdate from './src/Components/Main/Contact/ContactUpdate';
+import Handled from './src/Components/Main/Home/Collect/HandleRecyclables/Handled';
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -27,6 +31,13 @@ const App = () => {
           <Stack.Screen name="Gift" component={Gift} />
           <Stack.Screen name="Points" component={Points} />
           <Stack.Screen name="HistoryGift" component={HistoryGift} />
+          <Stack.Screen name="HistoryScore" component={HistoryScore} />
+          <Stack.Screen name="ContactUpdate" component={ContactUpdate} />
+          <Stack.Screen name="Handled" component={Handled} />
+          <Stack.Screen
+            name="HistoryRecyclables"
+            component={HistoryRecyclables}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

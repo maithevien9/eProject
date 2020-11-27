@@ -1,5 +1,5 @@
 const CreateNotifyAPI = async (Name, Detail, token) => {
-  var url = 'http://10.10.50.62:8001/CreateNotify';
+  var url = 'http://192.168.1.6:8001/CreateNotify';
 
   return await fetch(url, {
     method: 'POST',

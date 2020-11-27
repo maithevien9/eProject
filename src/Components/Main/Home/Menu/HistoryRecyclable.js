@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
-import icGift from '.././../../../Images/Icons/gift-box.png';
+import icGift from '.././../../../Images/Icons/grade.png';
 import {connect} from 'react-redux';
 
-const HistoryGift = (props) => {
+const HistoryRecyclables = (props) => {
   const convertDate = (date) => {
     var ts = new Date(date);
     return ts.toLocaleDateString();
@@ -15,29 +15,29 @@ const HistoryGift = (props) => {
   return (
     <View>
       <View style={styles.wrapperHeader}>
-        <Text style={styles.textStyleHeader}>Lịch sử đổi quà</Text>
+        <Text style={styles.textStyleHeader}>Lịch sử Rác Tái Chế</Text>
       </View>
       <ScrollView style={styles.wrapperMain}>
-        {props.historyGift.map((e) => (
+        {props.HistoryRecyclables.map((e) => (
           <View style={styles.wrapperForm} key={e.ID}>
             <Image source={icGift} style={styles.wrapperImage} />
             <View>
               <View style={styles.wrapperRowFull}>
                 <View style={styles.wrapperRowGift}>
-                  <Text style={styles.StyleText}>Tên quà: </Text>
+                  <Text style={styles.StyleText}>Trạng Thái: </Text>
                   <View>
-                    <Text style={styles.StyleText}>{e.NameGift}</Text>
+                    <Text style={styles.StyleText}>{e.StatusRecy}</Text>
                   </View>
                 </View>
                 <View style={styles.wrapperRowScore}>
-                  <Text style={styles.StyleText}>Điểm Đổi: </Text>
+                  <Text style={styles.StyleText}>Điểm: </Text>
                   <Text style={styles.StyleText}>{e.Score}</Text>
                 </View>
               </View>
               <View style={styles.wrapperRow}>
-                <Text style={styles.StyleText}>Ngày đổi: </Text>
+                <Text style={styles.StyleText}>Thời gian: </Text>
                 <Text style={styles.StyleText}>
-                  {convertDate(e.DateTime)} {convertDate2(e.DateTime)}
+                  {convertDate(e.CreateAtTime)} {convertDate2(e.CreateAtTime)}
                 </Text>
               </View>
             </View>
@@ -105,7 +105,7 @@ function mapStateToProps(state) {
   return {
     dataCheckLoginSuccess: state.dataCheckLoginSuccess,
     dataLogin: state.dataLogin,
-    historyGift: state.historyGift,
+    HistoryRecyclables: state.HistoryRecyclables,
   };
 }
-export default connect(mapStateToProps)(HistoryGift);
+export default connect(mapStateToProps)(HistoryRecyclables);

@@ -16,6 +16,12 @@ import {connect} from 'react-redux';
 import HomeView from './HomeView';
 import SaveDataLogin from '../../../AsyncStorage/SaveDataLogin';
 import GetHistoryGift from '../../../RestAPI/Gift/get-history-gift-api';
+import HistoryScore from '../../../RestAPI/Member/get-history-score-api';
+import GetHistoryRecyclables from '../../../RestAPI/Recyclables/get-history-recyclables';
+import {LogBox} from 'react-native';
+import GetInforUser from '../../../RestAPI/User/get-infor-user';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 const Home = (props) => {
   const [value, setvalue] = React.useState();
   const navigation = useNavigation();
@@ -31,6 +37,20 @@ const Home = (props) => {
 
   useEffect(() => {
     dataTemp();
+    GetInforUser(props.dataLogin.token)
+      .then((json) => {
+        var data = JSON.parse(JSON.stringify(json));
+        console.log(data);
+        if (data.dataString === 'THANH_CONG') {
+          props.dispatch({
+            type: 'setInforUser',
+            data: data.data,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error + 'fail');
+      });
   });
   const dataTemp = () => {
     if (props.dataLogin.accessToken) {
@@ -72,6 +92,36 @@ const Home = (props) => {
       });
     navigation.navigate('HistoryGift');
   };
+  const HandleHistoryScore = () => {
+    HistoryScore(props.dataLogin.token)
+      .then((json) => {
+        var data = JSON.parse(JSON.stringify(json));
+        console.log(data);
+        props.dispatch({
+          type: 'historyScore',
+          data: data.data,
+        });
+      })
+      .catch((error) => {
+        console.error(error + 'fail');
+      });
+    navigation.navigate('HistoryScore');
+  };
+  const HandleHistoryRecyclables = () => {
+    GetHistoryRecyclables(props.dataLogin.token)
+      .then((json) => {
+        var data = JSON.parse(JSON.stringify(json));
+        console.log(data);
+        props.dispatch({
+          type: 'HistoryRecyclables',
+          data: data.data,
+        });
+      })
+      .catch((error) => {
+        console.error(error + 'fail');
+      });
+    navigation.navigate('HistoryRecyclables');
+  };
   return (
     <View style={{flex: 1}}>
       <Drawer
@@ -91,11 +141,15 @@ const Home = (props) => {
               onPress={HandleHistoryGift}>
               <Text style={styles.StyleTextBtn}>Lịch Sử Đổi Quà</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.WrapperBtnLogOut}>
+            <TouchableOpacity
+              style={styles.WrapperBtnLogOut}
+              onPress={HandleHistoryScore}>
               <Text style={styles.StyleTextBtn}>Lịch Sử Tích Điểm</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.WrapperBtnLogOut}>
+            <TouchableOpacity
+              style={styles.WrapperBtnLogOut}
+              onPress={HandleHistoryRecyclables}>
               <Text style={styles.StyleTextBtn}>Lịch Sử Rác Tái Chế</Text>
             </TouchableOpacity>
 

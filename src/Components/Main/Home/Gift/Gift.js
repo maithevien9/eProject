@@ -38,35 +38,35 @@ const Gift = (props) => {
                         var data = JSON.parse(JSON.stringify(json));
 
                         if (data.dataString === 'THANH_CONG') {
-                          let ts = Date.now();
+                          // let ts = Date.now();
 
-                          let date_ob = new Date(ts);
-                          let date = date_ob.getDate();
-                          let month = date_ob.getMonth() + 1;
-                          let year = date_ob.getFullYear();
+                          // let date_ob = new Date(ts);
+                          // let date = date_ob.getDate();
+                          // let month = date_ob.getMonth() + 1;
+                          // let year = date_ob.getFullYear();
 
-                          var hour = date_ob.getHours();
-                          var min = date_ob.getMinutes();
-                          var sec = date_ob.getSeconds();
+                          // var hour = date_ob.getHours();
+                          // var min = date_ob.getMinutes();
+                          // var sec = date_ob.getSeconds();
 
-                          var dateTime =
-                            year +
-                            '-' +
-                            month +
-                            '-' +
-                            date +
-                            ' ' +
-                            hour +
-                            ':' +
-                            min +
-                            ':' +
-                            sec;
-                          console.log(dateTime);
-                          props.dispatch({
-                            type: 'addNotify',
-                            Name: 'Đổi gói quà 1 thành công',
-                            IDUser: props.dataLogin.data[0].ID,
-                          });
+                          // var dateTime =
+                          //   year +
+                          //   '-' +
+                          //   month +
+                          //   '-' +
+                          //   date +
+                          //   ' ' +
+                          //   hour +
+                          //   ':' +
+                          //   min +
+                          //   ':' +
+                          //   sec;
+                          // console.log(dateTime);
+                          // props.dispatch({
+                          //   type: 'addNotify',
+                          //   Name: 'Đổi gói quà 1 thành công',
+                          //   IDUser: props.dataLogin.data[0].ID,
+                          // });
                           navigation.goBack();
                         }
                       })

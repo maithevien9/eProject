@@ -23,6 +23,8 @@ import {useNavigation} from '@react-navigation/native';
 // import {Platform, PermissionsAndroid} from 'react-native';
 // import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {YellowBox} from 'react-native';
+import GetInforUser from '../../../RestAPI/User/get-infor-user';
+import {connect} from 'react-redux';
 // import LocationView from 'react-native-location-view';
 const {width} = Dimensions.get('window');
 
@@ -30,7 +32,7 @@ const {width} = Dimensions.get('window');
 //   'VirtualizedLists should never be nested', // TODO: Remove when fixed
 // ]);
 
-const Contact = () => {
+const Contact = (props) => {
   const navigation = useNavigation();
   const {
     mapContainer,
@@ -69,6 +71,19 @@ const Contact = () => {
     //   },
     //   {timeout: 20000},
     // );
+    console.log(props.InforUser);
+    if (props.InforUser[0].X) {
+      props.dispatch({
+        type: 'setdataCheckLocal',
+        data: true,
+      });
+    } else {
+      props.dispatch({
+        type: 'setdataCheckLocal',
+        data: false,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // const ref = useRef();
 
@@ -126,42 +141,50 @@ const Contact = () => {
           }}
           predefinedPlaces={[homePlace, workPlace]}
         /> */}
-
-        <MapView
-          style={styles.map}
-          initialRegion={{
-            latitude: latitude,
-            longitude: longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
-          }}>
-          <Marker
-            coordinate={{
-              latitude: latitude,
-              longitude: longitude,
-            }}
-            title={'Vien'}
-            description={'64 Nhon Hoa 5 - Cam Le - Da Nang'}
-          />
-        </MapView>
+        {props.dataCheckLocal ? (
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: props.InforUser[0].X,
+              longitude: props.InforUser[0].Y,
+              latitudeDelta: 3,
+              longitudeDelta: 3,
+            }}>
+            <Marker
+              coordinate={{
+                latitude: props.InforUser[0].X,
+                longitude: props.InforUser[0].Y,
+              }}
+              title={'Vien'}
+              description={'64 Nhon Hoa 5 - Cam Le - Da Nang'}
+            />
+          </MapView>
+        ) : (
+          <View>
+            <Text style={styles.TextMain}>Vui lòng cập nhập địa chỉ</Text>
+          </View>
+        )}
       </View>
       <View style={infoContainer}>
         <View style={rowInfoContainer}>
+          <Image source={mailIcon} style={imageStyle} />
+          <Text style={infoText}>{props.InforUser[0].Name}</Text>
+        </View>
+        <View style={rowInfoContainer}>
           <Image source={locationIcon} style={imageStyle} />
-          <Text style={infoText}>64 Nhon Hoa 5 - Cam Le - Da Nang</Text>
+          <View style={{width: '70%'}}>
+            <Text style={infoText}>{props.InforUser[0].Address}</Text>
+          </View>
         </View>
         <View style={rowInfoContainer}>
           <Image source={phoneIcon} style={imageStyle} />
-          <Text style={infoText}>(+84) 0869040015</Text>
+          <Text style={infoText}>{props.InforUser[0].Phone}</Text>
         </View>
-        <View style={rowInfoContainer}>
-          <Image source={mailIcon} style={imageStyle} />
-          <Text style={infoText}>maithevien9@gmail.com</Text>
-        </View>
-        <View style={[rowInfoContainer, {borderBottomWidth: 0}]}>
+
+        {/* <View style={[rowInfoContainer, {borderBottomWidth: 0}]}>
           <Image source={messageIcon} style={imageStyle} />
-          <Text style={infoText}>Mai The Vien</Text>
-        </View>
+          <Text style={infoText}>{props.InforUser.Address}</Text>
+        </View> */}
       </View>
       <View style={{alignItems: 'center', marginTop: 10}}>
         <TouchableOpacity
@@ -206,7 +229,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  map: {width: width - 25, height: 485},
+  map: {width: '95%', height: 285},
   mapStyle: {
     width: width - 40,
     height: 230,
@@ -217,7 +240,7 @@ const styles = StyleSheet.create({
   mapContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 290,
+    height: 340,
     backgroundColor: '#FFFFFF',
     margin: 10,
     borderRadius: 2,
@@ -238,6 +261,7 @@ const styles = StyleSheet.create({
   },
   rowInfoContainer: {
     height: 60,
+
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -274,6 +298,19 @@ const styles = StyleSheet.create({
     height: 50,
     width: '92%',
   },
+  TextMain: {
+    fontFamily: 'monospace',
+
+    fontWeight: '500',
+    fontSize: 20,
+  },
 });
 
-export default Contact;
+function mapStateToProps(state) {
+  return {
+    dataLogin: state.dataLogin,
+    InforUser: state.InforUser,
+    dataCheckLocal: state.dataCheckLocal,
+  };
+}
+export default connect(mapStateToProps)(Contact);

@@ -4,12 +4,42 @@ var dataLogin = {};
 var Scores = 0;
 var dataNotify = [];
 var historyGift = [];
+var historyScore = [];
+var HistoryRecyclables = [];
+var InforUser = {};
+var dataCheckLocal = false;
+var ZoomX = 15;
+var ZoomY = 15;
+const ZoomXRedycer = (state = ZoomX, action) => {
+  if (action.type === 'setZoomX') return action.data;
+  return state;
+};
+const ZoomYRedycer = (state = ZoomY, action) => {
+  if (action.type === 'setZoomY') return action.data;
+  return state;
+};
+const HistoryRecyclablesReducer = (state = HistoryRecyclables, action) => {
+  if (action.type === 'HistoryRecyclables') return action.data;
+  return state;
+};
 const dataLoginReducer = (state = dataLogin, action) => {
   if (action.type === 'setDataLogin') return action.data;
   return state;
 };
+const historyScoreReducer = (state = historyScore, action) => {
+  if (action.type === 'historyScore') return action.data;
+  return state;
+};
 const historyGiftReducer = (state = historyGift, action) => {
   if (action.type === 'historyGift') return action.data;
+  return state;
+};
+const InforUserReducer = (state = InforUser, action) => {
+  if (action.type === 'setInforUser') return action.data;
+  return state;
+};
+const dataCheckLocalReducer = (state = dataCheckLocal, action) => {
+  if (action.type === 'setdataCheckLocal') return action.data;
   return state;
 };
 const dataNotifyReducer = (state = dataNotify, action) => {
@@ -63,6 +93,12 @@ const reducer = combineReducers({
   Scores: ScoresReducer,
   dataNotify: dataNotifyReducer,
   historyGift: historyGiftReducer,
+  historyScore: historyScoreReducer,
+  HistoryRecyclables: HistoryRecyclablesReducer,
+  InforUser: InforUserReducer,
+  dataCheckLocal: dataCheckLocalReducer,
+  ZoomX: ZoomXRedycer,
+  ZoomY: ZoomYRedycer,
 });
 const store = createStore(reducer);
 

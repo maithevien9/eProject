@@ -1,5 +1,5 @@
 const CreateHistoryScore = async (token, IDGift, PriceGift) => {
-  var url = 'http://10.10.50.62:8001/CreateHistory';
+  var url = 'http://192.168.1.6:8001/CreateHistory';
 
   return await fetch(url, {
     method: 'POST',

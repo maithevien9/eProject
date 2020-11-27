@@ -13,11 +13,50 @@ import User from '../../Images/Icons/profile-user2.png';
 import User2 from '../../Images/Icons/profile-user.png';
 import Contact from './Contact/Contact';
 import Home from './Home/Home';
-import Notify from './Notify/Notify';
+import Notify from './Notify/NotifyView';
 import About from './About/about';
-import ContactMain from './Contact/ContactMain';
-const Main = () => {
+import ContactMain from './Contact/Contact';
+import GetInforUser from '../../RestAPI/User/get-infor-user';
+import {connect} from 'react-redux';
+import NotifyAPI from '../../RestAPI/Notify/get-notify-api';
+
+const Main = (props) => {
   const [selectedTab, setSelectedTab] = React.useState('home');
+  const HandleSelectContact = () => {
+    // GetInforUser(props.dataLogin.token)
+    //   .then((json) => {
+    //     var data = JSON.parse(JSON.stringify(json));
+    //     // console.log(data);
+    //     if (data.dataString === 'THANH_CONG') {
+    //       props.dispatch({
+    //         type: 'setInforUser',
+    //         data: data.data,
+    //       });
+    //       // setSelectedTab('Contact');
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error(error + 'fail');
+    //   });
+    setSelectedTab('Contact');
+  };
+  const HandleSelectNotify = () => {
+    NotifyAPI(props.dataLogin.token)
+      .then((json) => {
+        var data = JSON.parse(JSON.stringify(json));
+        console.log(data);
+        props.dispatch({
+          type: 'setdataNotify',
+          data: data.data,
+        });
+        if (data.dataString === 'THANH_CONG') {
+          setSelectedTab('notify');
+        }
+      })
+      .catch((error) => {
+        console.error(error + 'fail');
+      });
+  };
   return (
     <TabNavigator tabBarStyle={{height: 53}}>
       <TabNavigator.Item
@@ -39,7 +78,9 @@ const Main = () => {
         renderSelectedIcon={() => (
           <Image source={icNotify2} style={styles.wrapperImage} />
         )}
-        onPress={() => setSelectedTab('notify')}>
+        onPress={() => {
+          HandleSelectNotify();
+        }}>
         <Notify />
       </TabNavigator.Item>
       <TabNavigator.Item
@@ -61,7 +102,7 @@ const Main = () => {
         renderSelectedIcon={() => (
           <Image source={User} style={styles.wrapperImage} />
         )}
-        onPress={() => setSelectedTab('Contact')}>
+        onPress={() => HandleSelectContact()}>
         <ContactMain />
       </TabNavigator.Item>
     </TabNavigator>
@@ -70,4 +111,9 @@ const Main = () => {
 const styles = StyleSheet.create({
   wrapperImage: {height: 23, width: 23},
 });
-export default Main;
+function mapStateToProps(state) {
+  return {
+    dataLogin: state.dataLogin,
+  };
+}
+export default connect(mapStateToProps)(Main);

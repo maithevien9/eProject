@@ -1,5 +1,5 @@
 const NewRecyclablesAPI = async (Token, level) => {
-  var url = 'http://10.10.50.62:8001/NewRecyclables';
+  var url = 'http://192.168.1.6:8001/NewRecyclables';
 
   return await fetch(url, {
     method: 'POST',

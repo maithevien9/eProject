@@ -8,18 +8,18 @@ import {connect} from 'react-redux';
 const NotifyView = (props) => {
   useEffect(() => {
     async function CheckRecyle() {
-      Notify(props.dataLogin.token)
-        .then((json) => {
-          var data = JSON.parse(JSON.stringify(json));
-          console.log(data);
-          props.dispatch({
-            type: 'setdataNotify',
-            data: data.data,
-          });
-        })
-        .catch((error) => {
-          console.error(error + 'fail');
-        });
+      // Notify(props.dataLogin.token)
+      //   .then((json) => {
+      //     var data = JSON.parse(JSON.stringify(json));
+      //     console.log(data);
+      //     props.dispatch({
+      //       type: 'setdataNotify',
+      //       data: data.data,
+      //     });
+      //   })
+      //   .catch((error) => {
+      //     console.error(error + 'fail');
+      //   });
     }
     CheckRecyle();
     // eslint-disable-next-line react-hooks/exhaustive-deps

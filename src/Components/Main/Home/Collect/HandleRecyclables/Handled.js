@@ -7,7 +7,28 @@ import {connect} from 'react-redux';
 const handled = (props) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const navigation = useNavigation();
-
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    console.log(JSON.stringify(props.InforUser));
+    if (
+      props.InforUser[0].X &&
+      props.InforUser[0].Y &&
+      props.InforUser[0].Name &&
+      props.InforUser[0].Address &&
+      props.InforUser[0].Phone
+    ) {
+      props.dispatch({
+        type: 'setdataCheckLocal',
+        data: true,
+      });
+    } else {
+      props.dispatch({
+        type: 'setdataCheckLocal',
+        data: false,
+      });
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const Hanlelevel1 = () => {
     Alert.alert(
       'Thông báo',
@@ -21,32 +42,66 @@ const handled = (props) => {
         {
           text: 'Đồng ý',
           onPress: () => {
-            NewRecyclablesAPI(props.dataLogin.token, '1')
-              .then((json) => {
-                var data = JSON.parse(JSON.stringify(json));
-                console.log(data);
+            if (props.dataCheckLocal) {
+              NewRecyclablesAPI(props.dataLogin.token, '1')
+                .then((json) => {
+                  var data = JSON.parse(JSON.stringify(json));
+                  console.log(data);
 
-                if (data.dataString === 'THANH_CONG') {
-                  CreateNotifyAPI(
-                    'Đang chờ vận chuyển Gói Rác Tái Chế 1',
-                    '',
-                    props.dataLogin.token,
-                  )
-                    .then((json) => {
-                      var data = JSON.parse(JSON.stringify(json));
+                  if (data.dataString === 'THANH_CONG') {
+                    CreateNotifyAPI(
+                      'Đang chờ vận chuyển Gói Rác Tái Chế 1',
+                      '',
+                      props.dataLogin.token,
+                    )
+                      .then((json) => {
+                        var data = JSON.parse(JSON.stringify(json));
 
-                      if (data.dataString === 'THANH_CONG') {
-                        navigation.goBack();
-                      }
-                    })
-                    .catch((error) => {
-                      console.error(error + 'fail');
-                    });
-                }
-              })
-              .catch((error) => {
-                console.error(error + 'fail');
-              });
+                        if (data.dataString === 'THANH_CONG') {
+                          Alert.alert(
+                            'Nofity',
+                            'THÀNH CÔNG',
+                            [
+                              {
+                                text: 'Cancel',
+                                onPress: () => navigation.goBack(),
+                                style: 'cancel',
+                              },
+                              {
+                                text: 'OK',
+                                onPress: () => navigation.goBack(),
+                              },
+                            ],
+                            {cancelable: false},
+                          );
+                        }
+                      })
+                      .catch((error) => {
+                        console.error(error + 'fail');
+                      });
+                  }
+                })
+                .catch((error) => {
+                  console.error(error + 'fail');
+                });
+            } else {
+              Alert.alert(
+                'Nofity',
+                'Vui lòng cập nhập vị trí',
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => navigation.goBack(),
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'OK',
+                    onPress: () => navigation.navigate('ContactUpdate'),
+                  },
+                ],
+                {cancelable: false},
+              );
+            }
           },
         },
       ],
@@ -107,6 +162,8 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   return {
     dataLogin: state.dataLogin,
+    InforUser: state.InforUser,
+    dataCheckLocal: state.dataCheckLocal,
   };
 }
 export default connect(mapStateToProps)(handled);

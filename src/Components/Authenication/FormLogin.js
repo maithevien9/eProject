@@ -134,7 +134,7 @@ const FormLogin = (props) => {
         style={styles.textInput}
         placeholder="PassWord"
       />
-      <TouchableOpacity style={styles.ButtonFB}>
+      {/* <TouchableOpacity style={styles.ButtonFB}>
         <Image style={styles.stretch} source={ICFacebook} />
         <Text style={styles.Text3}>Login with Facebook</Text>
         <View></View>
@@ -143,7 +143,7 @@ const FormLogin = (props) => {
         <Image style={styles.stretch} source={ICEmail} />
         <Text style={styles.Text3}>Login with Email</Text>
         <View></View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity style={styles.Button} onPress={HandleLogin}>
         <Text style={styles.Text2}>SIGN IN</Text>
       </TouchableOpacity>
