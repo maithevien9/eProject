@@ -1,5 +1,5 @@
-const NewRecyclablesAPI = async (Token, level) => {
-  var url = 'http://192.168.1.6:8001/NewRecyclables';
+const NewRecyclablesAPI = async (Token, level, CreateAtTime) => {
+  var url = 'http://192.168.1.8:8001/NewRecyclables';
 
   return await fetch(url, {
     method: 'POST',
@@ -10,6 +10,7 @@ const NewRecyclablesAPI = async (Token, level) => {
     body: JSON.stringify({
       token: Token,
       IDlevel: level,
+      CreateAtTime: CreateAtTime,
     }),
   }).then((response) => response.json());
 };

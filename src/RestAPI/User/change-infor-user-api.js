@@ -1,5 +1,5 @@
 const ChangInforUser = async (Token, Name, Address, Phone, X, Y) => {
-  var url = 'http://192.168.1.6:8001/ChangInfor';
+  var url = 'http://192.168.1.8:8001/ChangInfor';
 
   return await fetch(url, {
     method: 'PUT',

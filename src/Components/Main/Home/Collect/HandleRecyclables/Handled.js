@@ -36,72 +36,13 @@ const handled = (props) => {
       [
         {
           text: 'Hủy',
-          onPress: () => navigation.goBack(),
+          onPress: () => navigation.replace('Main'),
           style: 'cancel',
         },
         {
           text: 'Đồng ý',
           onPress: () => {
-            if (props.dataCheckLocal) {
-              NewRecyclablesAPI(props.dataLogin.token, '1')
-                .then((json) => {
-                  var data = JSON.parse(JSON.stringify(json));
-                  console.log(data);
-
-                  if (data.dataString === 'THANH_CONG') {
-                    CreateNotifyAPI(
-                      'Đang chờ vận chuyển Gói Rác Tái Chế 1',
-                      '',
-                      props.dataLogin.token,
-                    )
-                      .then((json) => {
-                        var data = JSON.parse(JSON.stringify(json));
-
-                        if (data.dataString === 'THANH_CONG') {
-                          Alert.alert(
-                            'Nofity',
-                            'THÀNH CÔNG',
-                            [
-                              {
-                                text: 'Cancel',
-                                onPress: () => navigation.goBack(),
-                                style: 'cancel',
-                              },
-                              {
-                                text: 'OK',
-                                onPress: () => navigation.goBack(),
-                              },
-                            ],
-                            {cancelable: false},
-                          );
-                        }
-                      })
-                      .catch((error) => {
-                        console.error(error + 'fail');
-                      });
-                  }
-                })
-                .catch((error) => {
-                  console.error(error + 'fail');
-                });
-            } else {
-              Alert.alert(
-                'Nofity',
-                'Vui lòng cập nhập vị trí',
-                [
-                  {
-                    text: 'Cancel',
-                    onPress: () => navigation.goBack(),
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'OK',
-                    onPress: () => navigation.navigate('ContactUpdate'),
-                  },
-                ],
-                {cancelable: false},
-              );
-            }
+            navigation.replace('Booking');
           },
         },
       ],

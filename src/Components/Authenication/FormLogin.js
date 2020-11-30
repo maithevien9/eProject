@@ -48,13 +48,29 @@ const FormLogin = (props) => {
           //console.log(DataLoginUser);
 
           if (DataLoginUser.dataString === 'THANH_CONG') {
-            props.dispatch({
-              type: 'setDataLogin',
-              data: DataLoginUser,
-            });
-            SaveDataLogin(DataLoginUser);
-            console.log('OK');
-            navigation.navigate('Main');
+            if (DataLoginUser.data[0].IDdecentralization === 1) {
+              props.dispatch({
+                type: 'setDataLogin',
+                data: DataLoginUser,
+              });
+              SaveDataLogin(DataLoginUser);
+              console.log('OK');
+              navigation.navigate('Main');
+            } else {
+              Alert.alert(
+                'Nofity',
+                'Login not Success',
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                {cancelable: false},
+              );
+            }
           } else {
             Alert.alert(
               'Nofity',
