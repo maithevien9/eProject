@@ -1,9 +1,31 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Image,
+  ScrollView,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import NewRecyclablesAPI from '../../../../../RestAPI/Recyclables/new-recyclables-api';
 import CreateNotifyAPI from '../../../../../RestAPI/Notify/create-notify-api';
 import {connect} from 'react-redux';
+import {Dimensions} from 'react-native';
+import icPlastic1 from '../../../../../Images/Icons/plastic1.png';
+import icPlastic2 from '../../../../../Images/Icons/plastic2.png';
+import icPlastic3 from '../../../../../Images/Icons/plastic3.png';
+import icPlastic4 from '../../../../../Images/Icons/plastic4.png';
+import icPlastic5 from '../../../../../Images/Icons/plastic5.png';
+import icPaper1 from '../../../../../Images/Icons/paper1.png';
+import icPaper2 from '../../../../../Images/Icons/paper2.png';
+import icPaper3 from '../../../../../Images/Icons/paper3.png';
+import icMetal1 from '../../../../../Images/Icons/metal1.png';
+import icMetal2 from '../../../../../Images/Icons/metal2.png';
+import icMetal3 from '../../../../../Images/Icons/metal3.png';
+import ICRecy from '../../../../../Images/Icons/metal2.png';
+const windowWidth = Dimensions.get('window').width;
 const handled = (props) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const navigation = useNavigation();
@@ -29,10 +51,10 @@ const handled = (props) => {
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const Hanlelevel1 = () => {
+  const HanleRecyBooking = () => {
     Alert.alert(
       'Thông báo',
-      'Bạn có chắn chắn với Mức 1 không ?',
+      'Bạn có chắn chắn đặt lịch ?',
       [
         {
           text: 'Hủy',
@@ -51,20 +73,29 @@ const handled = (props) => {
   };
 
   return (
-    <View style={styles.wrapperMain}>
-      <TouchableOpacity style={styles.wrapperBtn} onPress={Hanlelevel1}>
+    <ScrollView style={styles.wrapperMain}>
+      {/* <TouchableOpacity style={styles.wrapperBtn} onPress={Hanlelevel1}>
         <Text style={styles.TextBtn}>Mức 1</Text>
+      </TouchableOpacity> */}
+
+      {props.Cart.map((e) => (
+        <View style={styles.wrapperMainCart}>
+          <View style={styles.wrapperinLine}>
+            <Image source={ICRecy} style={styles.wrapperImage} />
+            <View style={styles.wrapperText}>
+              <Text style={styles.stylesText}>Tên rác tái chế: {e.Name}</Text>
+              <Text style={styles.stylesText}>
+                Số Lượng: {e.amount}
+                {e.Unit.slice(2, 10)}
+              </Text>
+            </View>
+          </View>
+        </View>
+      ))}
+      <TouchableOpacity style={styles.wrapperBtn} onPress={HanleRecyBooking}>
+        <Text style={styles.TextSubmit}>Đặt lịch vận chuyển</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.wrapperBtn}>
-        <Text style={styles.TextBtn}>Mức 2</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.wrapperBtn}>
-        <Text style={styles.TextBtn}>Mức 3</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.wrapperBtn}>
-        <Text style={styles.TextBtn}>Mức 4</Text>
-      </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -72,31 +103,48 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   wrapperBtn: {
-    height: 80,
+    marginTop: '10%',
+    height: 50,
     width: '90%',
-    backgroundColor: 'yellow',
-    borderWidth: 1,
-    borderRadius: 20,
-    marginTop: '5%',
+    marginLeft: '5%',
+    backgroundColor: '#009966',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  wrapperTextHeader: {
-    marginTop: '5%',
-  },
-  Textheader: {
-    fontSize: 25,
-    fontFamily: 'monospace',
-    fontWeight: 'bold',
+    borderRadius: 17,
   },
   wrapperMain: {
     width: '100%',
-    alignItems: 'center',
     marginTop: '15%',
   },
-  TextBtn: {
+  wrapperMainCart: {
+    height: 70,
+    width: '90%',
+    marginLeft: '5%',
+    borderBottomWidth: 1.5,
+    marginBottom: '5%',
+  },
+  wrapperImage: {
+    height: 45,
+    width: 45,
+  },
+  wrapperinLine: {
+    flexDirection: 'row',
+    marginLeft: '2%',
+    alignItems: 'center',
+  },
+  wrapperText: {
+    marginLeft: '6%',
+  },
+  stylesText: {
+    width: windowWidth / 1.4,
+    fontSize: 15,
+    fontFamily: 'monospace',
+  },
+  TextSubmit: {
     fontSize: 20,
     fontFamily: 'monospace',
+    fontWeight: 'bold',
+    color: 'white',
   },
 });
 
@@ -105,6 +153,7 @@ function mapStateToProps(state) {
     dataLogin: state.dataLogin,
     InforUser: state.InforUser,
     dataCheckLocal: state.dataCheckLocal,
+    Cart: state.Cart,
   };
 }
 export default connect(mapStateToProps)(handled);

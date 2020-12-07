@@ -1,5 +1,5 @@
 const NewRecyclablesAPI = async (Token, level, CreateAtTime) => {
-  var url = 'http://192.168.1.8:8001/NewRecyclables';
+  var url = 'http://192.168.1.5:8001/NewRecyclables';
 
   return await fetch(url, {
     method: 'POST',

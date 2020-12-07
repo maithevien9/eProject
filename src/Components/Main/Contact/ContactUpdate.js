@@ -20,15 +20,16 @@ const ContactUpdate = (props) => {
   const [Address, setAddress] = useState('/');
 
   const [Phone, setPhone] = useState(
-    props.InforUser[0].Phone ? JSON.stringify(props.InforUser[0].Phone) : '',
+    props.InforUser[0].Phone ? props.InforUser[0].Phone : '',
   );
 
   const navigation = useNavigation();
   const [latitude, setlatitude] = useState(21.0277644);
   const [longitude, setlongitude] = useState(105.8341598);
-  const [ZoomX, setZoomX] = useState(15.01);
-  const [ZoomY, setZoomY] = useState(15.01);
+  const [ZoomX, setZoomX] = useState(0.5);
+  const [ZoomY, setZoomY] = useState(0.5);
   const [height, setheight] = useState(55);
+  const [DataCheckMap, setDataCheckMap] = useState(false);
   const handleBack = () => {
     navigation.goBack();
   };
@@ -36,59 +37,63 @@ const ContactUpdate = (props) => {
     setheight(300);
   };
   const handleUpdate = () => {
-    console.log(Address);
-    console.log(Name);
-    console.log(Phone);
-    console.log(latitude);
-    console.log(longitude);
-    ChangInforUser(
-      props.dataLogin.token,
-      Name,
-      Address,
-      Phone,
-      latitude,
-      longitude,
-    )
-      .then((json) => {
-        var data = JSON.parse(JSON.stringify(json));
-        console.log(data);
-        if (data.dataString === 'THANH_CONG') {
-          props.dispatch({
-            type: 'setInforUser',
-            data: [
-              {
-                ID: 8,
-                Name: Name,
-                Address: Address,
-                X: latitude,
-                Y: longitude,
-                Phone: Phone,
-                IDdecentralization: 1,
-              },
-            ],
-          });
-          props.dispatch({
-            type: 'setdataCheckLocal',
-            data: true,
-          });
-          Alert.alert(
-            'Nofity',
-            'Thanh Cong',
-            [
-              {
-                text: 'Cancel',
-                onPress: () => navigation.goBack(),
-                style: 'cancel',
-              },
-              {text: 'OK', onPress: () => navigation.goBack()},
-            ],
-            {cancelable: false},
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error + 'fail');
-      });
+    if (latitude === 21.0277644 || longitude === 105.8341598) {
+      Alert.alert(
+        'Nofity',
+        'Vui lòng nhập địa chỉ',
+        [{text: 'OK', onPress: () => console.log('?')}],
+        {cancelable: false},
+      );
+    } else {
+      ChangInforUser(
+        props.dataLogin.token,
+        Name,
+        Address,
+        Phone,
+        latitude,
+        longitude,
+      )
+        .then((json) => {
+          var data = JSON.parse(JSON.stringify(json));
+          console.log(data);
+          if (data.dataString === 'THANH_CONG') {
+            props.dispatch({
+              type: 'setInforUser',
+              data: [
+                {
+                  ID: 8,
+                  Name: Name,
+                  Address: Address,
+                  X: latitude,
+                  Y: longitude,
+                  Phone: Phone,
+                  IDdecentralization: 1,
+                },
+              ],
+            });
+            props.dispatch({
+              type: 'setdataCheckLocal',
+              data: true,
+            });
+            Alert.alert(
+              'Nofity',
+              'Thanh Cong',
+              [
+                {
+                  text: 'Cancel',
+                  onPress: () => navigation.goBack(),
+                  style: 'cancel',
+                },
+                {text: 'OK', onPress: () => navigation.goBack()},
+              ],
+              {cancelable: false},
+            );
+          }
+        })
+        .catch((error) => {
+          console.error(error + 'fail');
+        });
+    }
   };
   return (
     <View>
@@ -100,7 +105,7 @@ const ContactUpdate = (props) => {
       <View style={styles.wrapperMapFull}>
         {/* <View style={styles.wrapperMap} /> */}
 
-        <MapView
+        {/* <MapView
           style={styles.map}
           initialRegion={{
             latitude: latitude,
@@ -116,7 +121,30 @@ const ContactUpdate = (props) => {
             // title={'Vien'}
             // description={Address}
           />
-        </MapView>
+        </MapView> */}
+        {DataCheckMap ? (
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: latitude,
+              longitude: longitude,
+              latitudeDelta: ZoomX,
+              longitudeDelta: ZoomY,
+            }}>
+            <Marker
+              coordinate={{
+                latitude: latitude,
+                longitude: longitude,
+              }}
+              // title={'Vien'}
+              // description={Address}
+            />
+          </MapView>
+        ) : (
+          <View style={styles.map2}>
+            <Text style={styles.TextMain}>Vui lòng cập nhập địa chỉ</Text>
+          </View>
+        )}
       </View>
       <View
         style={{
@@ -152,9 +180,11 @@ const ContactUpdate = (props) => {
             // 'details' is provided when fetchDetails = true
             console.log(data.description);
             setAddress(data.description);
-
+            setDataCheckMap(true);
             setlatitude(details.geometry.location.lat);
+            console.log(latitude);
             setlongitude(details.geometry.location.lng);
+            console.log(longitude);
             setZoomX(0.3);
             setZoomY(0.3);
           }}
@@ -243,6 +273,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#C0C0C0',
     width: '95%',
   },
+  TextMain: {
+    fontFamily: 'monospace',
+
+    fontWeight: '500',
+    fontSize: 20,
+  },
   wrapperMapFull: {
     alignItems: 'center',
   },
@@ -256,6 +292,12 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
   },
   map: {width: '95%', height: 255},
+  map2: {
+    width: '95%',
+    height: 255,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   wrapperPlaces: {
     height: 55,
     width: '100%',

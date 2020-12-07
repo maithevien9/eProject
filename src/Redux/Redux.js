@@ -10,6 +10,22 @@ var InforUser = {};
 var dataCheckLocal = false;
 var ZoomX = 15;
 var ZoomY = 15;
+var Cart = [];
+const CartReducer = (state = Cart, action) => {
+  if (action.type === 'setCart') return action.data;
+  if (action.type === 'addCart') {
+    return [
+      {
+        ID: action.ID,
+        Name: action.Name,
+        amount: action.amount,
+        Score: action.Score,
+        Unit: action.Unit,
+      },
+    ].concat(state);
+  }
+  return state;
+};
 const ZoomXRedycer = (state = ZoomX, action) => {
   if (action.type === 'setZoomX') return action.data;
   return state;
@@ -99,6 +115,7 @@ const reducer = combineReducers({
   dataCheckLocal: dataCheckLocalReducer,
   ZoomX: ZoomXRedycer,
   ZoomY: ZoomYRedycer,
+  Cart: CartReducer,
 });
 const store = createStore(reducer);
 

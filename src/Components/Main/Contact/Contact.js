@@ -147,16 +147,14 @@ const Contact = (props) => {
             initialRegion={{
               latitude: props.InforUser[0].X,
               longitude: props.InforUser[0].Y,
-              latitudeDelta: 3,
-              longitudeDelta: 3,
+              latitudeDelta: 0.5,
+              longitudeDelta: 0.5,
             }}>
             <Marker
               coordinate={{
                 latitude: props.InforUser[0].X,
                 longitude: props.InforUser[0].Y,
               }}
-              title={'Vien'}
-              description={'64 Nhon Hoa 5 - Cam Le - Da Nang'}
             />
           </MapView>
         ) : (

@@ -18,6 +18,7 @@ import HistoryRecyclables from './src/Components/Main/Home/Menu/HistoryRecyclabl
 import ContactUpdate from './src/Components/Main/Contact/ContactUpdate';
 import Handled from './src/Components/Main/Home/Collect/HandleRecyclables/Handled';
 import Booking from './src/Components/Main/Home/Collect/HandleRecyclables/Booking/Booking';
+import CategoryDetail from './src/Components/Main/Home/category/CategoryDetail/CategoryDetail';
 const Stack = createStackNavigator();
 const App = () => {
   return (
@@ -36,7 +37,7 @@ const App = () => {
           <Stack.Screen name="ContactUpdate" component={ContactUpdate} />
           <Stack.Screen name="Handled" component={Handled} />
           <Stack.Screen name="Booking" component={Booking} />
-
+          <Stack.Screen name="CategoryDetail" component={CategoryDetail} />
           <Stack.Screen
             name="HistoryRecyclables"
             component={HistoryRecyclables}
